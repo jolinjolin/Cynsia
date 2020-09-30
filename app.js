@@ -62,5 +62,5 @@ app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 //============================================
 app.listen(3000, function(){
-	console.log("yelp camp server has started");
+	console.log("Server has started");
 });
