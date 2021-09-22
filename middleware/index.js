@@ -1,19 +1,17 @@
-var Campground = require("../models/campground");
+var Movie = require("../models/movie");
 var Comment = require("../models/comment");
 // var Review = require("../models/review");
 
-// all the middleare goes here
 var middlewareObj = {};
 
-middlewareObj.checkCampgroundOwnership = function(req, res, next) {
+middlewareObj.checkMovieOwnership = function(req, res, next) {
  if(req.isAuthenticated()){
-        Campground.findById(req.params.id, function(err, foundCampground){
+        Movie.findById(req.params.id, function(err, foundMovie){
            if(err){
-			   req.flash("error", "Campground not found")
+			   req.flash("error", "Movie not found")
                res.redirect("back");
            }  else {
-               // does user own the campground?
-            if(foundCampground.author.id.equals(req.user._id)) {
+            if(foundMovie.author.id.equals(req.user._id)) {
                 next();
             } else {
 				req.flash("error", "You don't have permission")
@@ -33,7 +31,6 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
            if(err){
                res.redirect("back");
            }  else {
-               // does user own the comment?
             if(foundComment.author.id.equals(req.user._id)) {
                 next();
             } else {
@@ -61,7 +58,6 @@ middlewareObj.checkReviewOwnership = function(req, res, next) {
             if(err || !foundReview){
                 res.redirect("back");
             }  else {
-                // does user own the comment?
                 if(foundReview.author.id.equals(req.user._id)) {
                     next();
                 } else {
@@ -78,20 +74,18 @@ middlewareObj.checkReviewOwnership = function(req, res, next) {
 
 middlewareObj.checkReviewExistence = function (req, res, next) {
     if (req.isAuthenticated()) {
-        Campground.findById(req.params.id).populate("reviews").exec(function (err, foundCampground) {
-            if (err || !foundCampground) {
-                req.flash("error", "Campground not found.");
+        Movie.findById(req.params.id).populate("reviews").exec(function (err, foundMovie) {
+            if (err || !foundMovie) {
+                req.flash("error", "Movie not found.");
                 res.redirect("back");
             } else {
-                // check if req.user._id exists in foundCampground.reviews
-                var foundUserReview = foundCampground.reviews.some(function (review) {
+                var foundUserReview = foundMovie.reviews.some(function (review) {
                     return review.author.id.equals(req.user._id);
                 });
                 if (foundUserReview) {
                     req.flash("error", "You already wrote a review.");
-                    return res.redirect("/campgrounds/" + foundCampground._id);
+                    return res.redirect("/movies/" + foundMovie._id);
                 }
-                // if the review was not found, go to the next middleware
                 next();
             }
         });

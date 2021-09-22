@@ -1,0 +1,48 @@
+<%- include("../partials/header") %>
+
+
+<div class = "container">
+	<header class="jumbotron">
+		<div class = "container" id ="welcomJumbotron">
+			<h1>
+				Welcome to Movie App!
+			</h1>
+			<p>
+				A community for movie lovers
+			</p>
+			<p>
+				<a class ="btn btn-primary btn-md" href ="/movies/new">Add New Movie</a>
+			</p>
+		</div>
+	</header>
+	
+	<div class="row text-center">
+		<% movies.forEach(function(movie){ %>
+			<div class= "col-md-3 col-sm-6">
+				<div class = "img-fluid img-thumbnail" id ="allmovies" alt="Responsive image">
+					<img src = "<%= movie.image%>">
+					<div class ="caption">
+						<h4><%= movie.name %></h4>
+						<% if (movie.rating === 0) { %>
+						<em>No reviews yet.</em>
+						<% } else { %>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star <% if (movie.rating > 1.5) { %> checked <% } %>"></span>
+						<span class="fa fa-star <% if (movie.rating > 2.5) { %> checked <% } %>"></span>
+						<span class="fa fa-star <% if (movie.rating > 3.5) { %> checked <% } %>"></span>
+						<span class="fa fa-star <% if (movie.rating > 4.5) { %> checked <% } %>"></span>
+                    <% } %>
+					</div>
+					<p>
+						<a href = "/movies/<%= movie._id %>" class = "btn btn-primary btn-sm">More Info</a>
+					</p>
+				</div>
+								
+			</div>
+		<% }); %>	
+	</div>
+	
+</div>
+
+<%- include("../partials/footer") %>	
+

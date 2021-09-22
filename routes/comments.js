@@ -1,29 +1,30 @@
 var express    = require("express"),
 	router     = express.Router({mergeParams: true}),
-	Campground = require("../models/campground"),
+	Movie = require("../models/movie"),
 	Comment    = require("../models/comment"),
     middleware = require("../middleware");
-//==============Comments routes===============
-//Comment new
+
+//comment routes
+//GET
 router.get("/new", middleware.isLoggedIn, function(req, res){
-	Campground.findById(req.params.id, function(err, campground){
+	Movie.findById(req.params.id, function(err, movie){
 		if(err){
 			console.log(err);
 		}
 		else{
-			res.render("comments/new", {campground:campground});
+			res.render("comments/new", {movie:movie});
 		}
 	});	
 });
-//Comment create
+//CREATE
 router.post("/", middleware.isLoggedIn, function(req, res){
-	Campground.findById(req.params.id, function(err, campground){
+	Movie.findById(req.params.id, function(err, movie){
 		if(err){
 			console.log(err);
-			redirect("/campgrounds");
+			redirect("/movies");
 		}
 		else{
-			Comment.create(req.body.comment, function(err, comment){
+			Movie.create(req.body.comment, function(err, comment){
 				if(err){
 					console.log(err);
 				}
@@ -31,49 +32,48 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 					comment.author.id = req.user._id;
 					comment.author.username = req.user.username;
 					comment.save();
-					campground.comments.push(comment);
-					campground.save();
+					movie.comments.push(comment);
+					movie.save();
 					req.flash("sucess", "Comment created")
-					res.redirect("/campgrounds/" + campground._id);
+					res.redirect("/movies/" + movie._id);
 				}
 			});
 		}
 	});
 });
-// Comment edit
+//GET
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
    Comment.findById(req.params.comment_id, function(err, foundComment){
       if(err){
           res.redirect("back");
       } else {
-        res.render("comments/edit", {campground_id: req.params.id, comment: foundComment});
+        res.render("comments/edit", {movie_id: req.params.id, comment: foundComment});
       }
    });
 });
 
-// Comment update
+//UPDATE
 router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
       if(err){
           res.redirect("back");
       } else {
-          res.redirect("/campgrounds/" + req.params.id );
+          res.redirect("/movies/" + req.params.id );
       }
    });
 });
 
-// Comment destroy
+//DESTROY
 router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
        if(err){
            res.redirect("back");
        } else {
 		   req.flash("sucess", "Comment deleted")
-           res.redirect("/campgrounds/" + req.params.id);
+           res.redirect("/movies/" + req.params.id);
        }
     });
 });
-//==============Comments routes===============
 
 
 module.exports = router;

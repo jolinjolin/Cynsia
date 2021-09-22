@@ -4,11 +4,10 @@ var express  = require("express"),
 	User     = require("../models/user");
 
 router.get("/", function(req,res){
-	// res.send("loading page");
 	res.render("landing");
 });
 
-//==============Authen routes=================
+//Authentication routes
 //show register form
 router.get("/register", function(req, res){
    res.render("register"); 
@@ -19,12 +18,11 @@ router.post("/register", function(req, res){
    User.register(newUser, req.body.password, function(err, user){
 	   if(err){
 		   console.log(err);
-		   // req.flash("error", err);
 		   return res.render("register",{error:err.message});
 	   }
 	   passport.authenticate("local")(req, res, function(){
-	   req.flash("success", "Welcome to YelpCamp " + user.username);
-	   res.redirect("/campgrounds");
+	   req.flash("success", "Welcome to Movie App" + user.username);
+	   res.redirect("/movies");
 	   });
    });
 });
@@ -35,24 +33,18 @@ router.get("/login", function(req, res){
 //handle login logic
 router.post("/login", passport.authenticate("local", 
     {
-        successRedirect: "/campgrounds",
+        successRedirect: "/movies",
         failureRedirect: "/login"
     }), function(req, res){
 });
-//==============Authen routes=================
 
-//==============Logout routes=================
+
+//Logout routes
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "Logged you out");
-   res.redirect("/campgrounds");
+   res.redirect("/movies");
 });
-//midware
-// function isLoggedIn(req, res, next){
-//     if(req.isAuthenticated()){
-//         return next();
-//     }
-//     res.redirect("/login");
-// }
-//==============Logout routes=================
+
+
 module.exports = router;
