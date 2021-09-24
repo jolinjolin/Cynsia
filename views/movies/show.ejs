@@ -12,12 +12,12 @@
 		<div class= "col-md-9">
 			<div class="img-thumbnail">
 				<img  class="img-responsive" src = "<%=movie.image%>">
-				<div class="caption-full">
-					<!-- <h4 class="float-md-right">$<%= movie.price %>/person</h4> -->
+				<div class="caption-full" style="padding: 20px">
 					<h4><a><%=movie.name%></a></h4>
 					<p><%=movie.description%></p>
 					<p>
-						<em>Submitted By <%= movie.author.username %>, <%= moment(movie.createdAt).fromNow() %></em>
+						<!-- <em>Submitted By <%= movie.author.username %>, <%= moment(movie.createdAt).fromNow() %></em> -->
+                        <em>Submitted <%= moment(movie.createdAt).fromNow() %></em>
 					</p>
 					<% if(currentUser && movie.author && movie.author.id && movie.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-sm btn-warning" href="/movies/<%= movie._id %>/edit">Edit</a>
@@ -30,7 +30,7 @@
 
 <!--Review section-->
             <div class="img-thumbnail">
-                <div class="caption-full">
+                <div class="caption-full" style="padding: 20px">
                     <% if (movie.rating === 0) { %>
                     <h5>
                         <em>No reviews yet.</em>
@@ -75,7 +75,7 @@
                         <h4><a href="/movies/<%= movie._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all reviews</a></h4>
                     </div>
                     <% } %>
-                    <div>
+                    <div class="text-right">
                         <a class="btn btn-primary btn-md <% if (currentUser && movie.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/movies/<%= movie._id %>/reviews/new">
                             Write a New Review</a>
                     </div>
