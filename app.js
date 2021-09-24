@@ -1,7 +1,7 @@
 const express = require("express"),
 	app = express(),
 	request = require("request"),
-	bodyParser = require("body-parser"),
+	// bodyParser = require("body-parser"),
 	// mongoose      = require('mongoose'),
 	flash = require("connect-flash"),
 	passport = require("passport"),
@@ -28,12 +28,14 @@ mongoose.connect('mongodb://localhost:27017/movie_app', {
 	.then(() => console.log('Connected to DB!'))
 	.catch(error => console.log(error.message));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false}));
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB();
+seedDB();
 getHighlights();
 app.locals.moment = Moment;
 
@@ -79,7 +81,7 @@ app.use(function (req, res, next) {
 app.use(indexRoutes);
 app.use("/movies", movieRoutes);
 app.use("/movies/:id/comments", commentRoutes);
-app.use("/movie/:id/reviews", reviewRoutes);
+app.use("/movies/:id/reviews", reviewRoutes);
 
 //============================================
 app.listen(3000, function () {
