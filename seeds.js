@@ -67,8 +67,8 @@ function seedDB() {
         callAPI((finishAPI) => {
             let imgUrl = "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/";
             imgUrl += finishAPI.poster_path;
-            let author = {
-                id: "123",
+            var author = {
+                id: require('mongodb').ObjectID,
                 username: "admin"
             }
             let newMovie = { name: finishAPI.original_title, image: imgUrl, description: finishAPI.overview };
