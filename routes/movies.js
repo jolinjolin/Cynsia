@@ -12,14 +12,16 @@ router.get("/", function (req, res) {
     let highlights;
     Highlight.find({}, function (err, data) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         } else {
             highlights = data;
         }
     });
     Movie.find({}, function (err, allMovies) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         } else {
             res.render("movies/index", { movies: allMovies, highlights: highlights });
         }
@@ -38,7 +40,8 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
     var newMovie = { name: name, image: image, description: description, author: author };
     Movie.create(newMovie, function (err, newCreate) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         }
         else {
             res.redirect("/movies");
@@ -65,7 +68,8 @@ router.get("/:id", function (req, res) {
         options: { sort: { createdAt: -1 } }
     }).exec(function (err, foundMovie) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         } 
         else {
             res.render("movies/show", { movie: foundMovie });
@@ -98,12 +102,12 @@ router.delete("/:id", middleware.checkMovieOwnership, function (req, res) {
         } else {
             Comment.remove({ "_id": { $in: movie.comments } }, function (err) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     return res.redirect("/movies");
                 }
                 Review.remove({ "_id": { $in: movie.reviews } }, function (err) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         return res.redirect("/movies");
                     }
                     movie.remove();

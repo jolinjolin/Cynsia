@@ -9,7 +9,8 @@ var express    = require("express"),
 router.get("/new", middleware.isLoggedIn, function(req, res){
 	Movie.findById(req.params.id, function(err, movie){
 		if(err){
-			console.log(err);
+			// console.log(err);
+			return
 		}
 		else{
 			res.render("comments/new", {movie:movie});
@@ -20,8 +21,8 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 router.post("/", middleware.isLoggedIn, function(req, res){
 	Movie.findById(req.params.id, function(err, movie){
 		if(err){
-			console.log(err);
-			redirect("/movies");
+			// console.log(err);
+			res.redirect("/movies");
 		}
 		else{
 			let data = {
@@ -29,7 +30,8 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			}
 			Movie.create(data, function(err, comment){
 				if(err){
-					console.log(err);
+					// console.log(err);
+					redirect("/movies");
 				}
 				else{
 					comment.author.id = req.user._id;

@@ -9,7 +9,8 @@ var cheerio = require('cheerio');
 function callAPI(finishAPI, id) {
     request("https://api.themoviedb.org/3/movie/" + id + "?api_key=54a10a45b22db7c593516ade575f8c41", { json: true }, (err, res, body) => {
         if (err) {
-            return console.log(err);
+            // return console.log(err);
+            return;
         }
         if (res.statusCode === 200) {
             finishAPI(body);
@@ -39,7 +40,8 @@ async function scrapeData(url, page) {
         // console.log(data)
         Highlight.create(data, function (err, newCreate) {
             if (err) {
-                console.log(err);
+                // console.log(err);
+                return
             }
             else {
             }
@@ -47,7 +49,8 @@ async function scrapeData(url, page) {
         }
 
     } catch (err) {
-        console.log(err);
+        // console.log(err);
+        return;
     }
 }
 
@@ -55,7 +58,8 @@ async function scrapeData(url, page) {
 function seedDB() {
     Movie.remove({}, function (err) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         }
         // console.log("removed all movies!");
         Comment.remove({}, function (err) {
@@ -74,7 +78,8 @@ function seedDB() {
             let newMovie = { name: finishAPI.original_title, image: imgUrl, description: finishAPI.overview };
             Movie.create(newMovie, function (err, newCreate) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
+                    return
                 }
                 else {
                     // res.redirect("/movies");
@@ -88,11 +93,13 @@ function seedDB() {
 async function getHighlights() {
     await Highlight.remove({}, function (err) {
         if (err) {
-            console.log(err);
+            // console.log(err);
+            return
         }
         // console.log("removed hightlights")
     });
-    const browser = await puppteer.launch({ headless: false });
+    // const browser = await puppteer.launch({ headless: false });
+    const browser = await puppteer.launch({ args: ['--no-sandbox']});
     const page = await browser.newPage();
     let data = await scrapeData("https://www.themoviedb.org/?language=en-US", page);
     await browser.close();
