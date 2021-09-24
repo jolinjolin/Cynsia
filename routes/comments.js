@@ -24,7 +24,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			redirect("/movies");
 		}
 		else{
-			Movie.create(req.body.comment, function(err, comment){
+			let data = {
+				text: req.body['comment[text']
+			}
+			Movie.create(data, function(err, comment){
 				if(err){
 					console.log(err);
 				}
