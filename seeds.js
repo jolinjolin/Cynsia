@@ -57,7 +57,7 @@ function seedDB() {
         if (err) {
             console.log(err);
         }
-        console.log("removed all movies!");
+        // console.log("removed all movies!");
         Comment.remove({}, function (err) {
         });
     });
@@ -90,7 +90,7 @@ async function getHighlights() {
         if (err) {
             console.log(err);
         }
-        console.log("removed hightlights")
+        // console.log("removed hightlights")
     });
     const browser = await puppteer.launch({ headless: false });
     const page = await browser.newPage();
