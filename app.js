@@ -37,8 +37,8 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-seedDB();
 getHighlights();
+seedDB();
 app.locals.moment = Moment;
 
 //Passport config
