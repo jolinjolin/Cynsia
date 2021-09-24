@@ -1,8 +1,8 @@
 .navbar .navbar-brand {
-	color:#1d1d1d;
+	color:#f8f8f8;
 }
 .navbar .nav-item {
-	color:#e1e3e3;
+	color:#161616;
 }
 #allmovies {
 	width: 100%;
@@ -29,15 +29,22 @@
 .checked {
     color: orange;
 }
-.jumbotron {
+.jumbotron.background {
   background-image: url("../assets/homepage.png");
   background-size: cover;
 }
+.non-background {
+	background-color: #ffffff;
+	background-size: cover;
+}
+.non-background h3{
+	color: #5e6573;
+}
 
 #welcomJumbotron h1{
-	color: white;
+	color: rgb(250, 248, 248);
 }
 #welcomJumbotron p{
-	color: rgb(112, 250, 220);
-	font-size: 16px;
+	color: rgb(252, 230, 230);
+	font-size: 20px;
 }
