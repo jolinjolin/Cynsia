@@ -11,8 +11,11 @@ var express = require("express"),
 router.get("/", function (req, res) {
     let highlights;
     Highlight.find({}, function (err, data) {
-        if (err) throw err;
-        highlights = data;
+        if (err) {
+            console.log(err);
+        } else {
+            highlights = data;
+        }
     });
     Movie.find({}, function (err, allMovies) {
         if (err) {
@@ -44,16 +47,15 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
 });
 //NEW
 router.get("/new", middleware.isLoggedIn, async function (req, res) {
-    // let search = req.query.search;
-    // const browser = await puppteer.launch({headless : false});
-    // const page = await browser.newPage();
-    // let data = await scrapeData("https://www.themoviedb.org/movie/566525-shang-chi-and-the-legend-of-the-ten-rings", page);
-    // await browser.close();
-    // console.log(data)
     let search = (req.query.search).toString();
     Movie.findOne({ name: search }, function (err, data) {
-        if (err) throw err;
-        res.render("movies/new", { data: data });
+        if (err || !data) {
+            // console.log(err);
+            res.send("Not found")
+        }
+        else {
+            res.render("movies/new", { data: data });
+        }
     });
 });
 // SHOW
@@ -64,7 +66,8 @@ router.get("/:id", function (req, res) {
     }).exec(function (err, foundMovie) {
         if (err) {
             console.log(err);
-        } else {
+        } 
+        else {
             res.render("movies/show", { movie: foundMovie });
         }
     });
