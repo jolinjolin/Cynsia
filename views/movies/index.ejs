@@ -2,27 +2,69 @@
 
 
 <div class = "container">
-	<header class="jumbotron">
+	<header class="jumbotron background">
 		<div class = "container" id ="welcomJumbotron">
 			<h1>
-				Welcome to Movie App!
+				Welcome to Movie App
 			</h1>
 			<p>
-				A community for movie lovers
+				Movie search, rating and review
 			</p>
 			<p>
-				<a class ="btn btn-primary btn-md" href ="/movies/new">Add New Movie</a>
+				<!-- <a class ="btn btn-primary btn-md" href ="/movies/new">Add New Movie</a> -->
+				<form action="/movies/new" method="GET">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" name="search" placeholder="Search a movie" aria-label="Recipient's username" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-default btn-md">
+								<span class="material-icons">search</span>
+							</button>
+						</div>
+					</div>
+				</form>
 			</p>
 		</div>
 	</header>
-	
+
+	<div class="jumbotron jumbotron-fluid non-background">
+		<div class="container">
+	<div class="row text-center" style="padding-left: 15px">
+		<h3>Featured</h3>
+	</div>
 	<div class="row text-center">
+		<% var count = 0; %>
+		<% highlights.forEach(function(highlight){ %>
+			<% count++; %>
+				<% if(count <= 6){ %>
+			<div class= "col-md-2 col-sm-8">
+				<div class = "img-fluid img-thumbnail" id ="highlights" alt="Responsive image">
+					<img src = "<%= highlight.image%>">
+					<div class ="caption">
+						<h5 style="padding-top:5px;"><%= highlight.name %></h5>
+						<p><%= highlight.releaseDate %></p>
+					</div>
+				</div>
+								
+			</div>
+			<% } %>
+			<% }); %>
+	</div>
+	</div>
+	</div>
+		
+	<div class="row text-center" style="padding-left: 15px">
+		<h3>More</h3>
+	</div>
+	<div class="row text-center">
+		<% var count = 0; %>
 		<% movies.forEach(function(movie){ %>
+			<% count++; %>
+				<% if(count <= 100){ %>
 			<div class= "col-md-3 col-sm-6">
 				<div class = "img-fluid img-thumbnail" id ="allmovies" alt="Responsive image">
 					<img src = "<%= movie.image%>">
 					<div class ="caption">
-						<h4><%= movie.name %></h4>
+						<h6 style="padding-top:5px;"><%= movie.name %></h6>
 						<% if (movie.rating === 0) { %>
 						<em>No reviews yet.</em>
 						<% } else { %>
@@ -39,6 +81,7 @@
 				</div>
 								
 			</div>
+			<% } %>
 		<% }); %>	
 	</div>
 	
