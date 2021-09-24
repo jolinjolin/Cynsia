@@ -37,7 +37,11 @@ router.post("/", middleware.isLoggedIn, middleware.checkReviewExistence, functio
             req.flash("error", err.message);
             return res.redirect("back");
         }
-        Review.create(req.body.review, function (err, review) {
+        let data = {
+            rating: req.body['review[rating]'],
+            text: req.body['review[text]']
+        };
+        Review.create(data, function (err, review) {
             if (err) {
                 req.flash("error", err.message);
                 return res.redirect("back");
