@@ -8,14 +8,15 @@
 	<div class = "row mt:20 text-center">
 		<form action = "/movies/<%= movie._id%>/comments" method = "POST">
 			<div class = "form group">
-				<input class = "form-control" type= "text" name = "comment[text]" placeholder = "text">
+				<textarea class="form-control" type="text" name="comment[text]" placeholder="Write a comment" rows="5"></textarea>
 			</div>
+			</br>
 			<div class = "form group">
 				<button class ="btn btn-lg btn-primary btn-block">Submit!</button>
 			</div>
 		</form>
 	</div>
-	
+	</br>
 	<div class = "row mt:20 text-center">
 		<a href ="/movies">Go Back</a>
 	</div>
