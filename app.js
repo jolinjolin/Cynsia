@@ -2,7 +2,6 @@ const express = require("express"),
 	app = express(),
 	request = require("request"),
 	// bodyParser = require("body-parser"),
-	// mongoose      = require('mongoose'),
 	flash = require("connect-flash"),
 	passport = require("passport"),
 	LocalStrategy = require("passport-local"),
@@ -12,7 +11,8 @@ const express = require("express"),
 	User = require("./models/user"),
 	{seedDB, getHighlights} = require("./seeds"),
 	Moment = require("moment"),
-	mongoose = require('mongoose');
+	mongoose = require('mongoose'),
+	dotenv = require('dotenv');
 // puppteer = require('puppeteer'),
 // cheerio = require('cheerio');
 
@@ -21,9 +21,11 @@ var commentRoutes = require("./routes/comments"),
 	indexRoutes = require("./routes/index"),
 	reviewRoutes = require("./routes/reviews");
 
-mongoose.connect('mongodb://localhost:27017/movie_app', {
+dotenv.config({path: './.env'});
+mongoose.connect(process.env.DB, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	userCreateIndex: true,
 })
 	.then(() => console.log('Connected to DB!'))
 	.catch(error => console.log(error.message));
@@ -84,6 +86,6 @@ app.use("/movies/:id/comments", commentRoutes);
 app.use("/movies/:id/reviews", reviewRoutes);
 
 //============================================
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
 	console.log("Server has started");
 });
