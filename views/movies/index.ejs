@@ -26,7 +26,7 @@
 		</div>
 	</header>
 
-	<div class="jumbotron jumbotron-fluid non-background">
+	<div class="jumbotron jumbotron-fluid non-background" style="padding-top: 5px; padding-bottom: 0; margin-bottom: 0;">
 		<div class="container">
 	<div class="row text-center" style="padding-left: 15px">
 		<h3>Featured</h3>
@@ -37,7 +37,7 @@
 			<% count++; %>
 				<% if(count <= 6){ %>
 			<div class= "col-md-2 col-sm-8">
-				<div class = "img-fluid img-thumbnail" id ="highlights" alt="Responsive image">
+				<div class = "img-fluid img-thumbnail" id ="highlights" alt="Responsive image" style="border:0">
 					<img src = "<%= highlight.image%>">
 					<div class ="caption">
 						<h5 style="padding-top:5px;"><%= highlight.name %></h5>

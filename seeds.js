@@ -99,7 +99,7 @@ async function getHighlights() {
         // console.log("removed hightlights")
     });
     // const browser = await puppteer.launch({ headless: false });
-    const browser = await puppteer.launch({ args: ['--no-sandbox']});
+    const browser = await puppteer.launch({ headless: false, args: ['--no-sandbox']});
     const page = await browser.newPage();
     let data = await scrapeData("https://www.themoviedb.org/?language=en-US", page);
     await browser.close();
