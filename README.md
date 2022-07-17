@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 Cynsia Movie App
-=======
 # Movie App
->>>>>>> ca74f68 (update)
 
 A web application for movie search, rating and comment
 # Set up
